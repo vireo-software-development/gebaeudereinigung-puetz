@@ -1,0 +1,157 @@
+import { Metadata } from "next"
+import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "Datenschutzerklärung - Gebäudereinigung Pütz UG",
+  description: "Datenschutzerklärung der Gebäudereinigung Pütz UG. Informationen zur Verarbeitung Ihrer personenbezogenen Daten.",
+}
+
+export default function DatenschutzPage() {
+  return (
+    <main className="container mx-auto px-4 py-12 max-w-4xl">
+      <h1 className="text-3xl font-bold mb-8">Datenschutzerklärung</h1>
+      
+      <div className="prose prose-lg max-w-none">
+        <h2>1. Datenschutz auf einen Blick</h2>
+        
+        <h3>Allgemeine Hinweise</h3>
+        <p>
+          Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, 
+          wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert 
+          werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem Text 
+          aufgeführten Datenschutzerklärung.
+        </p>
+        
+        <h3>Datenerfassung auf dieser Website</h3>
+        <p>
+          <strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong><br />
+          Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem 
+          Impressum dieser Website entnehmen.
+        </p>
+        
+        <p>
+          <strong>Wie erfassen wir Ihre Daten?</strong><br />
+          Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, 
+          die Sie in ein Kontaktformular eingeben.
+        </p>
+        <p>
+          Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. 
+          Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). 
+          Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten.
+        </p>
+        
+        <p>
+          <strong>Wofür nutzen wir Ihre Daten?</strong><br />
+          Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. 
+          Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.
+        </p>
+        
+        <p>
+          <strong>Welche Rechte haben Sie bezüglich Ihrer Daten?</strong><br />
+          Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten 
+          personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. 
+          Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. 
+          Außerdem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.
+        </p>
+        
+        <h2>2. Allgemeine Hinweise und Pflichtinformationen</h2>
+        
+        <h3>Datenschutz</h3>
+        <p>
+          Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten 
+          vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.
+        </p>
+        <p>
+          Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten erhoben. Personenbezogene Daten sind Daten, 
+          mit denen Sie persönlich identifiziert werden können. Die vorliegende Datenschutzerklärung erläutert, welche Daten wir erheben 
+          und wofür wir sie nutzen. Sie erläutert auch, wie und zu welchem Zweck das geschieht.
+        </p>
+        
+        <h3>Hinweis zur verantwortlichen Stelle</h3>
+        <p>
+          Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
+        </p>
+        <p>
+          Gebäudereinigung Pütz UG<br />
+          Musterstraße 123<br />
+          12345 Musterstadt<br />
+          Deutschland
+        </p>
+        <p>
+          Telefon: +49-123-456789<br />
+          E-Mail: info@puetz-reinigung.de
+        </p>
+        
+        <h3>Speicherdauer</h3>
+        <p>
+          Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, bleiben Ihre personenbezogenen Daten 
+          bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine 
+          Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe 
+          für die Speicherung Ihrer personenbezogenen Daten haben (z. B. steuer- oder handelsrechtliche Aufbewahrungsfristen); im letztgenannten 
+          Fall erfolgt die Löschung nach Fortfall dieser Gründe.
+        </p>
+        
+        <h3>Cookies</h3>
+        <p>
+          Unsere Website verwendet Cookies. Hierbei handelt es sich um kleine Textdateien, die auf Ihrem Endgerät abgelegt werden. 
+          Ihr Browser greift auf diese Dateien zu. Durch den Einsatz von Cookies erhöht sich die Benutzerfreundlichkeit und Sicherheit dieser Website.
+        </p>
+        <p>
+          Gängige Browser bieten die Einstellungsoption, Cookies nicht zuzulassen. Hinweis: Es ist nicht gewährleistet, dass Sie auf alle Funktionen 
+          dieser Website ohne Einschränkungen zugreifen können, wenn Sie entsprechende Einstellungen vornehmen.
+        </p>
+        <p>
+          Sie können Ihre Cookie-Einstellungen jederzeit anpassen, indem Sie auf unserer Website auf "Cookie-Einstellungen" klicken.
+        </p>
+        
+        <h2>3. Datenerfassung auf dieser Website</h2>
+        
+        <h3>Server-Log-Dateien</h3>
+        <p>
+          Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, 
+          die Ihr Browser automatisch an uns übermittelt. Dies sind:
+        </p>
+        <ul>
+          <li>Browsertyp und Browserversion</li>
+          <li>verwendetes Betriebssystem</li>
+          <li>Referrer URL</li>
+          <li>Hostname des zugreifenden Rechners</li>
+          <li>Uhrzeit der Serveranfrage</li>
+          <li>IP-Adresse</li>
+        </ul>
+        <p>
+          Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.
+        </p>
+        
+        <h3>Kontaktformular</h3>
+        <p>
+          Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen 
+          dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. 
+          Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
+        </p>
+        
+        <h3>Analyse-Tools und Werbung</h3>
+        <p>
+          Wir setzen Analyse-Tools nur mit Ihrer ausdrücklichen Einwilligung ein. Sie können diese Einwilligung jederzeit in unseren 
+          Cookie-Einstellungen widerrufen.
+        </p>
+        
+        <h2>4. Ihre Rechte</h2>
+        <p>
+          Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. 
+          Außerdem haben Sie das Recht auf Datenübertragbarkeit und Widerspruch gegen die Verarbeitung.
+        </p>
+        <p>
+          Wenn Sie der Meinung sind, dass die Verarbeitung Ihrer personenbezogenen Daten gegen das Datenschutzrecht verstößt oder Ihre 
+          datenschutzrechtlichen Ansprüche sonst in einer Weise verletzt worden sind, können Sie sich bei der Aufsichtsbehörde beschweren.
+        </p>
+        
+        <div className="mt-8">
+          <Link href="/" className="text-[#00C2FF] hover:underline">
+            Zurück zur Startseite
+          </Link>
+        </div>
+      </div>
+    </main>
+  )
+} 
