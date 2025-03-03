@@ -43,9 +43,9 @@ export function Header() {
         <div className="container">
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center">
-              <div className="relative h-12 w-12 mr-2">
+              <div className="relative h-12 w-16 mr-2">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-dREijWmYdvwrmYKcfXKhZVIFK5uk3C.png"
+                  src="/logo/logo.svg"
                   alt="Gebäudereinigung Pütz UG Logo"
                   fill
                   className="object-contain"
