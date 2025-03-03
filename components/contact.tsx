@@ -28,16 +28,33 @@ export function Contact() {
     setIsSubmitting(true)
     setError(null)
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    // Timeout für die Anfrage setzen (15 Sekunden)
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error('Die Anfrage hat zu lange gedauert. Bitte versuchen Sie es später erneut.'));
+      }, 15000);
+    });
 
-      const data = await response.json();
+    try {
+      // Race zwischen der Fetch-Anfrage und dem Timeout
+      const response = await Promise.race([
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }),
+        timeoutPromise
+      ]) as Response;
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        console.error('Fehler beim Parsen der JSON-Antwort:', jsonError);
+        throw new Error('Serverfehler: Die Antwort konnte nicht verarbeitet werden. Bitte versuchen Sie es später erneut.');
+      }
 
       if (!response.ok) {
         throw new Error(data.error || 'Fehler beim Senden der Nachricht');
@@ -87,7 +104,11 @@ export function Contact() {
 
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-4 mb-6">
-                  {error}
+                  <p className="font-medium">Fehler beim Senden der Nachricht:</p>
+                  <p>{error}</p>
+                  <p className="mt-2 text-sm">
+                    Sollte das Problem weiterhin bestehen, kontaktieren Sie uns bitte telefonisch unter +49 2403 5192438 oder per E-Mail an info@gebaeudereinigung-puetz.de.
+                  </p>
                 </div>
               )}
 
