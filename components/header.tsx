@@ -20,7 +20,7 @@ export function Header() {
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
-                <span>Mo - DO: 8:00 - 16:00 & Fr: 8:00 - 12:00</span>
+                <span>Mo - Do: 8:00 - 16:00 & Fr: 8:00 - 12:00</span>
               </div>
             </div>
             <div className="flex items-center space-x-4">

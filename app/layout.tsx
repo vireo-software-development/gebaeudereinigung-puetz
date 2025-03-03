@@ -42,10 +42,10 @@ export const metadata: Metadata = {
     siteName: "Gebäudereinigung Pütz UG",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Gebäudereinigung Pütz UG Logo",
+        url: "/screenshot.png",
+        width: 2930,
+        height: 1560,
+        alt: "Gebäudereinigung Pütz UG Website",
       },
     ],
   },
