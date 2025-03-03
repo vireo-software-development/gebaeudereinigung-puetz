@@ -6,21 +6,21 @@ export function Testimonials() {
     {
       name: "Michael Schmidt",
       company: "Schmidt & Partner GmbH",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/testimonials/person1.jpg",
       text: "Wir arbeiten seit über 3 Jahren mit Gebäudereinigung Pütz UG zusammen und sind äußerst zufrieden. Die Reinigungsleistung ist stets auf höchstem Niveau und das Team ist sehr zuverlässig und flexibel.",
       rating: 5,
     },
     {
       name: "Sabine Müller",
       company: "Müller Immobilien",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/testimonials/person2.jpg",
       text: "Die Zusammenarbeit mit Gebäudereinigung Pütz UG ist unkompliziert und professionell. Besonders die Treppenhausreinigung in unseren Mehrfamilienhäusern wird immer zur vollsten Zufriedenheit ausgeführt.",
       rating: 5,
     },
     {
       name: "Thomas Weber",
       company: "Weber IT Solutions",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/testimonials/person3.jpg",
       text: "Seit wir die Büroreinigung an Gebäudereinigung Pütz UG übertragen haben, können wir uns voll auf unser Kerngeschäft konzentrieren. Die Qualität der Reinigung ist hervorragend und das Preis-Leistungs-Verhältnis stimmt.",
       rating: 4,
     },
@@ -40,7 +40,7 @@ export function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-white rounded-lg shadow-md p-6">
               <div className="flex items-center mb-4">
-                <div className="relative h-12 w-12 rounded-full overflow-hidden mr-4">
+                <div className="relative h-16 w-16 rounded-full overflow-hidden mr-4">
                   <Image
                     src={testimonial.image || "/placeholder.svg"}
                     alt={testimonial.name}
