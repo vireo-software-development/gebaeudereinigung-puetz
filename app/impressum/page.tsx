@@ -15,33 +15,33 @@ export default function ImpressumPage() {
         <h2>Angaben gemäß § 5 TMG</h2>
         <p>
           Gebäudereinigung Pütz UG (haftungsbeschränkt)<br />
-          Musterstraße 123<br />
-          12345 Musterstadt<br />
+          Talstraße 154<br />
+          52249 Eschweiler<br />
           Deutschland
         </p>
         
         <h3>Vertreten durch</h3>
         <p>
-          Max Mustermann, Geschäftsführer
+          Markus Pütz, Geschäftsführer
         </p>
         
         <h3>Kontakt</h3>
         <p>
-          Telefon: +49-123-456789<br />
-          E-Mail: info@puetz-reinigung.de
+          Telefon: +49 2403 5192438<br />
+          E-Mail: info@gebaeudereinigung-puetz.de
         </p>
         
         <h3>Registereintrag</h3>
         <p>
           Eintragung im Handelsregister.<br />
-          Registergericht: Amtsgericht Musterstadt<br />
-          Registernummer: HRB 12345
+          Registergericht: Amtsgericht Aachen<br />
+          Registernummer: HRB 27519
         </p>
         
         <h3>Umsatzsteuer-ID</h3>
         <p>
           Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-          DE123456789
+          DE367106286
         </p>
         
         <h2>Haftungsausschluss</h2>

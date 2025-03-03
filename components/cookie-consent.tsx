@@ -19,26 +19,23 @@ export function CookieConsent() {
   useEffect(() => {
     // Verzögerung hinzufügen, damit die Komponente nicht sofort erscheint
     const timer = setTimeout(() => {
-      const consent = localStorage.getItem("cookie-consent")
-      if (!consent) {
+      const hasConsent = localStorage.getItem("cookieConsent")
+      if (!hasConsent) {
         setShowConsent(true)
-      } else {
-        try {
-          const savedPreferences = JSON.parse(consent)
-          setCookiePreferences(savedPreferences)
-        } catch (e) {
-          // Bei Fehler: Zurücksetzen und neu anzeigen
-          localStorage.removeItem("cookie-consent")
-          setShowConsent(true)
-        }
       }
     }, 1000)
+
+    // Globale Funktion zum Öffnen der Cookie-Einstellungen
+    if (typeof window !== "undefined") {
+      window.openCookieSettings = openCookieSettings
+    }
 
     return () => clearTimeout(timer)
   }, [])
 
   const savePreferences = () => {
-    localStorage.setItem("cookie-consent", JSON.stringify(cookiePreferences))
+    localStorage.setItem("cookieConsent", "true")
+    localStorage.setItem("cookiePreferences", JSON.stringify(cookiePreferences))
     setShowConsent(false)
     applyConsentSettings(cookiePreferences)
   }
@@ -50,7 +47,8 @@ export function CookieConsent() {
       analytics: true,
       marketing: true,
     }
-    localStorage.setItem("cookie-consent", JSON.stringify(allAccepted))
+    localStorage.setItem("cookieConsent", "true")
+    localStorage.setItem("cookiePreferences", JSON.stringify(allAccepted))
     setCookiePreferences(allAccepted)
     setShowConsent(false)
     applyConsentSettings(allAccepted)
@@ -63,136 +61,178 @@ export function CookieConsent() {
       analytics: false,
       marketing: false,
     }
-    localStorage.setItem("cookie-consent", JSON.stringify(essentialOnly))
+    localStorage.setItem("cookieConsent", "true")
+    localStorage.setItem("cookiePreferences", JSON.stringify(essentialOnly))
     setCookiePreferences(essentialOnly)
     setShowConsent(false)
     applyConsentSettings(essentialOnly)
   }
 
   const applyConsentSettings = (settings: typeof cookiePreferences) => {
-    // Hier die entsprechenden Cookies/Skripte aktivieren oder deaktivieren
-    if (settings.analytics) {
-      // Analytics aktivieren (z.B. Google Analytics)
-      window.dataLayer = window.dataLayer || []
-      window.dataLayer.push({
-        event: 'consent',
-        analytics_consent: true
-      })
+    // Google Analytics deaktivieren, wenn nicht zugestimmt
+    if (!settings.analytics) {
+      // Deaktiviere Google Analytics
+      if (typeof window !== "undefined") {
+        (window as any)["ga-disable-G-XXXXXXXX"] = true
+      }
+      
+      // Lösche vorhandene Analytics-Cookies
+      document.cookie = "_ga=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+      document.cookie = "_ga_XXXXXXXX=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+      document.cookie = "_gid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+      document.cookie = "_gat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    } else {
+      // Aktiviere Google Analytics, wenn zugestimmt
+      if (typeof window !== "undefined") {
+        (window as any)["ga-disable-G-XXXXXXXX"] = false;
+        
+        // Google Analytics initialisieren, falls noch nicht geschehen
+        if (!(window as any).ga) {
+          initializeAnalytics();
+        }
+      }
     }
-    
-    if (settings.marketing) {
-      // Marketing-Cookies aktivieren
-      window.dataLayer = window.dataLayer || []
-      window.dataLayer.push({
-        event: 'consent',
-        marketing_consent: true
-      })
+
+    // Marketing-Cookies deaktivieren, wenn nicht zugestimmt
+    if (!settings.marketing) {
+      // Lösche Marketing-Cookies
+      document.cookie = "_fbp=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+      // Weitere Marketing-Cookies hier hinzufügen
+    }
+  }
+
+  // Funktion zum Initialisieren von Google Analytics
+  const initializeAnalytics = () => {
+    if (typeof window !== "undefined" && cookiePreferences.analytics) {
+      // Google Analytics Code hier einfügen
+      // Beispiel:
+      /*
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'G-XXXXXXXX', 'auto');
+      ga('send', 'pageview');
+      */
     }
   }
 
   const handleCookieToggle = (category: keyof typeof cookiePreferences) => {
-    if (category === 'essential') return // Essential kann nicht deaktiviert werden
+    if (category === "essential") return // Essential kann nicht deaktiviert werden
     
-    setCookiePreferences(prev => ({
+    setCookiePreferences((prev) => ({
       ...prev,
-      [category]: !prev[category]
+      [category]: !prev[category],
     }))
   }
 
   const openCookieSettings = () => {
+    // Lade gespeicherte Einstellungen, falls vorhanden
+    const savedPreferences = localStorage.getItem("cookiePreferences")
+    if (savedPreferences) {
+      setCookiePreferences(JSON.parse(savedPreferences))
+    }
     setShowConsent(true)
   }
-
-  // Globale Funktion zum Öffnen der Cookie-Einstellungen
-  useEffect(() => {
-    // @ts-ignore
-    window.openCookieSettings = openCookieSettings
-    
-    return () => {
-      // @ts-ignore
-      delete window.openCookieSettings
-    }
-  }, [])
 
   if (!showConsent) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-fade">
-      <Card className="mx-auto max-w-2xl w-full shadow-rombo max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <CardHeader>
           <CardTitle>Cookie-Einstellungen</CardTitle>
           <CardDescription>
-            Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung auf unserer Website zu bieten.
+            Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung auf unserer Website zu bieten. Bitte wählen Sie,
+            welche Arten von Cookies Sie akzeptieren möchten.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2">
+          <div className="space-y-4">
+            <div className="flex items-start space-x-3 pt-2">
               <Checkbox id="essential" checked disabled />
-              <Label htmlFor="essential" className="font-medium">Essenzielle Cookies</Label>
+              <div className="space-y-1 leading-none">
+                <Label htmlFor="essential" className="font-medium">
+                  Essentielle Cookies
+                </Label>
+                <p className="text-sm text-muted-foreground">
+                  Diese Cookies sind für das Funktionieren der Website unbedingt erforderlich und können nicht
+                  deaktiviert werden.
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground pl-6">
-              Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.
-            </p>
-          </div>
-          
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="functional" 
+
+            <div className="flex items-start space-x-3 pt-2">
+              <Checkbox
+                id="functional"
                 checked={cookiePreferences.functional}
-                onCheckedChange={() => handleCookieToggle('functional')}
+                onCheckedChange={() => handleCookieToggle("functional")}
               />
-              <Label htmlFor="functional" className="font-medium">Funktionale Cookies</Label>
+              <div className="space-y-1 leading-none">
+                <Label htmlFor="functional" className="font-medium">
+                  Funktionale Cookies
+                </Label>
+                <p className="text-sm text-muted-foreground">
+                  Diese Cookies ermöglichen erweiterte Funktionen und Personalisierung, wie z.B. Videoeinbettungen und
+                  Live-Chats.
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground pl-6">
-              Diese Cookies ermöglichen erweiterte Funktionen und Personalisierung.
-            </p>
-          </div>
-          
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="analytics" 
+
+            <div className="flex items-start space-x-3 pt-2">
+              <Checkbox
+                id="analytics"
                 checked={cookiePreferences.analytics}
-                onCheckedChange={() => handleCookieToggle('analytics')}
+                onCheckedChange={() => handleCookieToggle("analytics")}
               />
-              <Label htmlFor="analytics" className="font-medium">Analyse-Cookies</Label>
+              <div className="space-y-1 leading-none">
+                <Label htmlFor="analytics" className="font-medium">
+                  Analyse-Cookies
+                </Label>
+                <p className="text-sm text-muted-foreground">
+                  Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie
+                  Informationen anonym sammeln und melden.
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground pl-6">
-              Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren.
-            </p>
-          </div>
-          
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="marketing" 
+
+            <div className="flex items-start space-x-3 pt-2">
+              <Checkbox
+                id="marketing"
                 checked={cookiePreferences.marketing}
-                onCheckedChange={() => handleCookieToggle('marketing')}
+                onCheckedChange={() => handleCookieToggle("marketing")}
               />
-              <Label htmlFor="marketing" className="font-medium">Marketing-Cookies</Label>
+              <div className="space-y-1 leading-none">
+                <Label htmlFor="marketing" className="font-medium">
+                  Marketing-Cookies
+                </Label>
+                <p className="text-sm text-muted-foreground">
+                  Diese Cookies werden verwendet, um Besucher auf Websites zu verfolgen. Die Absicht ist, Anzeigen zu
+                  schalten, die relevant und ansprechend für den einzelnen Benutzer sind.
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground pl-6">
-              Diese Cookies werden verwendet, um Werbung relevanter für Sie zu gestalten.
-            </p>
           </div>
-          
-          <div className="text-sm text-muted-foreground pt-2">
-            Weitere Informationen finden Sie in unserer{" "}
-            <Link href="/datenschutz" className="text-[#00C2FF] hover:underline">
+
+          <div className="text-sm text-muted-foreground mt-4">
+            Weitere Informationen darüber, wie wir Ihre Daten verarbeiten, finden Sie in unserer{" "}
+            <Link href="/datenschutz" className="text-primary hover:underline">
               Datenschutzerklärung
-            </Link>.
+            </Link>
+            .
           </div>
         </CardContent>
-        <CardFooter className="flex flex-wrap justify-end gap-4">
-          <Button variant="outline" onClick={acceptEssential}>
-            Nur Essenzielle
-          </Button>
-          <Button variant="outline" onClick={savePreferences}>
-            Auswahl speichern
-          </Button>
-          <Button className="bg-[#00C2FF] hover:bg-[#00A8E0]" onClick={acceptAll}>
+        <CardFooter className="flex flex-col sm:flex-row gap-2 sm:justify-between">
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <Button variant="outline" onClick={acceptEssential} className="w-full sm:w-auto">
+              Nur Essentiell
+            </Button>
+            <Button onClick={savePreferences} className="w-full sm:w-auto">
+              Auswahl speichern
+            </Button>
+          </div>
+          <Button onClick={acceptAll} variant="default" className="bg-primary hover:bg-primary/90 w-full sm:w-auto">
             Alle akzeptieren
           </Button>
         </CardFooter>
@@ -201,11 +241,10 @@ export function CookieConsent() {
   )
 }
 
-// Typdefinition für globales Fenster-Objekt
+// Erweitere den Window-Typ für TypeScript
 declare global {
   interface Window {
     openCookieSettings?: () => void;
     dataLayer?: any[];
   }
-}
-
+} 

@@ -73,13 +73,13 @@ export default function DatenschutzPage() {
         </p>
         <p>
           Gebäudereinigung Pütz UG<br />
-          Musterstraße 123<br />
-          12345 Musterstadt<br />
+          Talstraße 154<br />
+          52249 Eschweiler<br />
           Deutschland
         </p>
         <p>
-          Telefon: +49-123-456789<br />
-          E-Mail: info@puetz-reinigung.de
+          Telefon: +49 2403 5192438<br />
+          E-Mail: info@gebaeudereinigung-puetz.de
         </p>
         
         <h3>Speicherdauer</h3>
@@ -97,11 +97,28 @@ export default function DatenschutzPage() {
           Ihr Browser greift auf diese Dateien zu. Durch den Einsatz von Cookies erhöht sich die Benutzerfreundlichkeit und Sicherheit dieser Website.
         </p>
         <p>
+          Wir verwenden verschiedene Arten von Cookies auf unserer Website:
+        </p>
+        <ul>
+          <li>
+            <strong>Essentielle Cookies:</strong> Diese Cookies sind für den Betrieb der Website unbedingt erforderlich und ermöglichen grundlegende Funktionen wie Seitennavigation und Zugriff auf sichere Bereiche der Website. Die Website kann ohne diese Cookies nicht richtig funktionieren.
+          </li>
+          <li>
+            <strong>Funktionale Cookies:</strong> Diese Cookies ermöglichen es uns, erweiterte Funktionalitäten und Personalisierung bereitzustellen, wie z.B. Videos oder Live-Chats. Sie können von uns oder von Drittanbietern gesetzt werden, deren Dienste wir auf unseren Seiten eingebunden haben.
+          </li>
+          <li>
+            <strong>Analyse-Cookies:</strong> Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie Informationen anonym sammeln und melden. Sie helfen uns, unsere Website zu verbessern.
+          </li>
+          <li>
+            <strong>Marketing-Cookies:</strong> Diese Cookies werden verwendet, um Besucher auf Websites zu verfolgen. Die Absicht ist, Anzeigen zu schalten, die relevant und ansprechend für den einzelnen Benutzer sind und daher wertvoller für Publisher und werbetreibende Drittparteien sind.
+          </li>
+        </ul>
+        <p>
           Gängige Browser bieten die Einstellungsoption, Cookies nicht zuzulassen. Hinweis: Es ist nicht gewährleistet, dass Sie auf alle Funktionen 
           dieser Website ohne Einschränkungen zugreifen können, wenn Sie entsprechende Einstellungen vornehmen.
         </p>
         <p>
-          Sie können Ihre Cookie-Einstellungen jederzeit anpassen, indem Sie auf unserer Website auf "Cookie-Einstellungen" klicken.
+          Sie können Ihre Cookie-Einstellungen jederzeit anpassen, indem Sie auf unserer Website auf "Cookie-Einstellungen" klicken oder den entsprechenden Link im Footer unserer Website verwenden.
         </p>
         
         <h2>3. Datenerfassung auf dieser Website</h2>
@@ -128,6 +145,17 @@ export default function DatenschutzPage() {
           Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen 
           dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. 
           Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
+        </p>
+        <p>
+          Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags 
+          zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem 
+          berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung 
+          (Art. 6 Abs. 1 lit. a DSGVO), sofern diese abgefragt wurde.
+        </p>
+        <p>
+          Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung 
+          widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche 
+          Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.
         </p>
         
         <h3>Analyse-Tools und Werbung</h3>
