@@ -16,7 +16,7 @@ export function Header() {
             <div className="flex items-center space-x-4 mb-2 md:mb-0">
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2" />
-                <span>Rufen Sie uns an: +49 2403 5192438</span>
+                <span>Rufen Sie uns an: +49 2423 9509409</span>
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
