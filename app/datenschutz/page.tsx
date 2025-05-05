@@ -73,12 +73,13 @@ export default function DatenschutzPage() {
         </p>
         <p>
           Gebäudereinigung Pütz UG<br />
-          Talstraße 154<br />
-          52249 Eschweiler<br />
+          Obstwiese 38<br />
+          52459 Inden<br />
           Deutschland
         </p>
         <p>
           Telefon: +49 2403 5192438<br />
+          Fax: +49 2423 9509407<br />
           E-Mail: info@gebaeudereinigung-puetz.de
         </p>
         

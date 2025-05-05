@@ -15,8 +15,8 @@ export default function ImpressumPage() {
         <h2>Angaben gemäß § 5 TMG</h2>
         <p>
           Gebäudereinigung Pütz UG (haftungsbeschränkt)<br />
-          Talstraße 154<br />
-          52249 Eschweiler<br />
+          Obstwiese 38<br />
+          52459 Inden<br />
           Deutschland
         </p>
         
@@ -27,15 +27,16 @@ export default function ImpressumPage() {
         
         <h3>Kontakt</h3>
         <p>
-          Telefon: +49 2403 5192438<br />
+          Telefon: +49 2423 9509409<br />
+          Fax: +49 2423 9509407<br />
           E-Mail: info@gebaeudereinigung-puetz.de
         </p>
         
         <h3>Registereintrag</h3>
         <p>
           Eintragung im Handelsregister.<br />
-          Registergericht: Amtsgericht Aachen<br />
-          Registernummer: HRB 27519
+          Registergericht: Handelsregister Düren<br />
+          Registernummer: HRB 10003
         </p>
         
         <h3>Umsatzsteuer-ID</h3>
