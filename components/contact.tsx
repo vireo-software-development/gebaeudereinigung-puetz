@@ -228,9 +228,9 @@ export function Contact() {
                   <div>
                     <h4 className="font-medium">Adresse</h4>
                     <p className="text-muted-foreground">
-                      Talstraße 154
+                      Obstwiese 38
                       <br />
-                      52249 Eschweiler
+                      52459 Inden
                       <br />
                       Deutschland
                     </p>
