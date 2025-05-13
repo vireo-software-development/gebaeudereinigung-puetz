@@ -36,7 +36,7 @@ export default function ImpressumPage() {
         <p>
           Eintragung im Handelsregister.<br />
           Registergericht: Handelsregister Düren<br />
-          Registernummer: HRB 10003
+          Registernummer: HRB 10009
         </p>
         
         <h3>Umsatzsteuer-ID</h3>
