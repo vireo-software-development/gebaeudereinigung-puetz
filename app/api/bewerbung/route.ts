@@ -119,6 +119,29 @@ export async function POST(req: NextRequest) {
     };
 
     await transporter.sendMail(mailOptions);
+
+    // Bestätigungs-E-Mail an den Bewerber
+    const bestaetigungSubject = jobTitle
+      ? `Ihre Bewerbung auf: ${jobTitle} bei Gebäudereinigung Pütz UG`
+      : "Ihre Initiativbewerbung bei Gebäudereinigung Pütz UG";
+    const bestaetigungText = `Sehr geehrte/r ${vorname} ${nachname},\n\nherzlichen Dank für Ihre Bewerbung${jobTitle ? ` auf die Stelle "${jobTitle}"` : ""} bei der Gebäudereinigung Pütz UG.\n\nWir haben Ihre Unterlagen erhalten und werden diese sorgfältig prüfen. Bitte haben Sie Verständnis, dass die Bearbeitung einige Zeit in Anspruch nehmen kann. Wir melden uns schnellstmöglich bei Ihnen.\n\nMit freundlichen Grüßen\nIhr Team der Gebäudereinigung Pütz UG`;
+    const bestaetigungHtml = `
+      <div style="font-family:sans-serif;max-width:600px;margin:auto;">
+        <h2 style="color:#1e293b;">Vielen Dank für Ihre Bewerbung${jobTitle ? ` auf <span style='color:#0ea5e9;'>${jobTitle}</span>` : ""}!</h2>
+        <p>Sehr geehrte/r ${vorname} ${nachname},</p>
+        <p>herzlichen Dank für Ihre Bewerbung${jobTitle ? ` auf die Stelle <b>„${jobTitle}“</b>` : ""} bei der <b>Gebäudereinigung Pütz UG</b>.</p>
+        <p>Wir haben Ihre Unterlagen erhalten und werden diese sorgfältig prüfen.<br>Bitte haben Sie Verständnis, dass die Bearbeitung einige Zeit in Anspruch nehmen kann.<br>Wir melden uns schnellstmöglich bei Ihnen.</p>
+        <p style="margin-top:2em;">Mit freundlichen Grüßen<br>Ihr Team der Gebäudereinigung Pütz UG</p>
+      </div>
+    `;
+    await transporter.sendMail({
+      from: process.env.EMAIL_FROM || 'noreply@gebaeudereinigung-puetz.de',
+      to: email,
+      subject: bestaetigungSubject,
+      text: bestaetigungText,
+      html: bestaetigungHtml,
+    });
+
     return NextResponse.json({ success: true });
   } catch (emailError) {
     console.error('Fehler beim Senden der E-Mail:', emailError);
