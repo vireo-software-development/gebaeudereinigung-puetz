@@ -28,34 +28,40 @@ export default function Bewerbungsformular({ jobTitle }: BewerbungsformularProps
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Hilfsfunktion für gefährliche Zeichen
-  const forbiddenPattern = /[<>;"'\\/|&$]/g
+  // const forbiddenPattern = /[<>;"'\\/|&$]/g
+  // const validateField = (name: string, value: string) => {
+  //   if (forbiddenPattern.test(value)) {
+  //     return false
+  //   }
+  //   if (name === "email") {
+  //     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+  //   }
+  //   if (name === "telefon") {
+  //     return /^[0-9+\- ]*$/.test(value)
+  //   }
+  //   return true
+  // }
+  // const [fieldErrors, setFieldErrors] = useState<{[key:string]:string}>({})
 
-  // Validierung für alle Felder
-  const validateField = (name: string, value: string) => {
-    if (forbiddenPattern.test(value)) {
-      return false
-    }
-    if (name === "email") {
-      // Einfache E-Mail-Validierung
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-    }
-    if (name === "telefon") {
-      // Nur Ziffern, Leerzeichen, +, - erlaubt
-      return /^[0-9+\- ]*$/.test(value)
-    }
-    return true
+  const fieldRefs = {
+    vorname: useRef<HTMLInputElement>(null),
+    nachname: useRef<HTMLInputElement>(null),
+    email: useRef<HTMLInputElement>(null),
+    telefon: useRef<HTMLInputElement>(null),
+    geburtsdatum: useRef<HTMLInputElement>(null),
+    adresse: useRef<HTMLInputElement>(null),
+    eintritt: useRef<HTMLInputElement>(null),
+    gehalt: useRef<HTMLInputElement>(null),
+    motivation: useRef<HTMLTextAreaElement>(null),
   }
-
-  const [fieldErrors, setFieldErrors] = useState<{[key:string]:string}>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target
-    if (!validateField(name, value)) {
-      setFieldErrors(prev => ({ ...prev, [name]: "Ungültige Eingabe!" }))
-    } else {
-      setFieldErrors(prev => ({ ...prev, [name]: "" }))
-    }
+    // if (!validateField(name, value)) {
+    //   setFieldErrors(prev => ({ ...prev, [name]: "Ungültige Eingabe!" }))
+    // } else {
+    //   setFieldErrors(prev => ({ ...prev, [name]: "" }))
+    // }
     if (type === "file") {
       const input = e.target as HTMLInputElement
       if (input.files && input.files.length > 0) {
@@ -88,31 +94,39 @@ export default function Bewerbungsformular({ jobTitle }: BewerbungsformularProps
     e.preventDefault()
     setIsSubmitting(true)
     setError(null)
-
-    // Prüfe auf Fehler in den Feldern
-    const stringFields = [
-      "vorname",
-      "nachname",
-      "email",
-      "telefon",
-      "geburtsdatum",
-      "adresse",
-      "eintritt",
-      "gehalt",
-      "motivation"
-    ] as const;
-    for (const key of stringFields) {
-      if (!validateField(key, formData[key])) {
-        setError("Bitte überprüfen Sie Ihre Eingaben. Es sind ungültige Zeichen enthalten.")
-        setIsSubmitting(false)
-        return
-      }
-    }
-    if (Object.values(fieldErrors).some(msg => msg)) {
-      setError("Bitte überprüfen Sie Ihre Eingaben.")
-      setIsSubmitting(false)
-      return
-    }
+    // const stringFields = [
+    //   "vorname",
+    //   "nachname",
+    //   "email",
+    //   "telefon",
+    //   "geburtsdatum",
+    //   "adresse",
+    //   "eintritt",
+    //   "gehalt",
+    //   "motivation"
+    // ] as const;
+    // type StringField = typeof stringFields[number];
+    // for (const key of stringFields) {
+    //   const isOptional = ["telefon", "geburtsdatum", "adresse", "eintritt", "gehalt"].includes(key)
+    //   if (isOptional && !formData[key]) continue
+    //   const valid = validateField(key, formData[key])
+    //   console.log(`[DEBUG] Feld: ${key}, Wert: '${formData[key]}', gültig: ${valid}`)
+    //   if (!valid) {
+    //     setError(`Bitte überprüfen Sie Ihre Eingabe im Feld "${key.charAt(0).toUpperCase() + key.slice(1)}".`)
+    //     setIsSubmitting(false)
+    //     setTimeout(() => fieldRefs[key]?.current?.focus(), 0)
+    //     return
+    //   }
+    // }
+    // if (Object.values(fieldErrors).some(msg => msg)) {
+    //   const firstErrorKey = Object.keys(fieldErrors).find(k => fieldErrors[k]) as StringField | undefined
+    //   if (firstErrorKey && fieldRefs[firstErrorKey]) {
+    //     setTimeout(() => fieldRefs[firstErrorKey]?.current?.focus(), 0)
+    //   }
+    //   setError("Bitte überprüfen Sie Ihre Eingaben.")
+    //   setIsSubmitting(false)
+    //   return
+    // }
 
     if (formData.files.length === 0) {
       setError("Bitte laden Sie mindestens eine PDF-Datei hoch.")
@@ -192,49 +206,49 @@ export default function Bewerbungsformular({ jobTitle }: BewerbungsformularProps
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label htmlFor="vorname" className="block text-sm font-medium mb-1">Vorname *</label>
-                    <input type="text" id="vorname" name="vorname" value={formData.vorname} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-                    {fieldErrors.vorname && <span className="text-xs text-red-600">{fieldErrors.vorname}</span>}
+                    <input type="text" id="vorname" name="vorname" value={formData.vorname} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.vorname} />
+                    {/* {fieldErrors.vorname && <span className="text-xs text-red-600">{fieldErrors.vorname}</span>} */}
                   </div>
                   <div>
                     <label htmlFor="nachname" className="block text-sm font-medium mb-1">Nachname *</label>
-                    <input type="text" id="nachname" name="nachname" value={formData.nachname} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-                    {fieldErrors.nachname && <span className="text-xs text-red-600">{fieldErrors.nachname}</span>}
+                    <input type="text" id="nachname" name="nachname" value={formData.nachname} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.nachname} />
+                    {/* {fieldErrors.nachname && <span className="text-xs text-red-600">{fieldErrors.nachname}</span>} */}
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-1">E-Mail *</label>
-                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-                    {fieldErrors.email && <span className="text-xs text-red-600">{fieldErrors.email}</span>}
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.email} />
+                    {/* {fieldErrors.email && <span className="text-xs text-red-600">{fieldErrors.email}</span>} */}
                   </div>
                   <div>
                     <label htmlFor="telefon" className="block text-sm font-medium mb-1">Telefon</label>
-                    <input type="tel" id="telefon" name="telefon" value={formData.telefon} onChange={handleChange} inputMode="tel" pattern="[0-9+\- ]*" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-                    {fieldErrors.telefon && <span className="text-xs text-red-600">{fieldErrors.telefon}</span>}
+                    <input type="tel" id="telefon" name="telefon" value={formData.telefon} onChange={handleChange} inputMode="tel" pattern="[0-9+\- ]*" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.telefon} />
+                    {/* {fieldErrors.telefon && <span className="text-xs text-red-600">{fieldErrors.telefon}</span>} */}
                   </div>
                   <div>
                     <label htmlFor="geburtsdatum" className="block text-sm font-medium mb-1">Geburtsdatum</label>
-                    <input type="date" id="geburtsdatum" name="geburtsdatum" value={formData.geburtsdatum} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-                    {fieldErrors.geburtsdatum && <span className="text-xs text-red-600">{fieldErrors.geburtsdatum}</span>}
+                    <input type="date" id="geburtsdatum" name="geburtsdatum" value={formData.geburtsdatum} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.geburtsdatum} />
+                    {/* {fieldErrors.geburtsdatum && <span className="text-xs text-red-600">{fieldErrors.geburtsdatum}</span>} */}
                   </div>
                   <div>
                     <label htmlFor="adresse" className="block text-sm font-medium mb-1">Adresse</label>
-                    <input type="text" id="adresse" name="adresse" value={formData.adresse} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-                    {fieldErrors.adresse && <span className="text-xs text-red-600">{fieldErrors.adresse}</span>}
+                    <input type="text" id="adresse" name="adresse" value={formData.adresse} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.adresse} />
+                    {/* {fieldErrors.adresse && <span className="text-xs text-red-600">{fieldErrors.adresse}</span>} */}
                   </div>
                   <div>
                     <label htmlFor="eintritt" className="block text-sm font-medium mb-1">Frühester Eintrittstermin</label>
-                    <input type="date" id="eintritt" name="eintritt" value={formData.eintritt} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-                    {fieldErrors.eintritt && <span className="text-xs text-red-600">{fieldErrors.eintritt}</span>}
+                    <input type="date" id="eintritt" name="eintritt" value={formData.eintritt} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.eintritt} />
+                    {/* {fieldErrors.eintritt && <span className="text-xs text-red-600">{fieldErrors.eintritt}</span>} */}
                   </div>
                   <div>
                     <label htmlFor="gehalt" className="block text-sm font-medium mb-1">Gehaltsvorstellung (optional)</label>
-                    <input type="text" id="gehalt" name="gehalt" value={formData.gehalt} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-                    {fieldErrors.gehalt && <span className="text-xs text-red-600">{fieldErrors.gehalt}</span>}
+                    <input type="text" id="gehalt" name="gehalt" value={formData.gehalt} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.gehalt} />
+                    {/* {fieldErrors.gehalt && <span className="text-xs text-red-600">{fieldErrors.gehalt}</span>} */}
                   </div>
                 </div>
                 <div className="mb-4">
                   <label htmlFor="motivation" className="block text-sm font-medium mb-1">Motivation / Kurzes Anschreiben *</label>
-                  <textarea id="motivation" name="motivation" value={formData.motivation} onChange={handleChange} required rows={4} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                  {fieldErrors.motivation && <span className="text-xs text-red-600">{fieldErrors.motivation}</span>}
+                  <textarea id="motivation" name="motivation" value={formData.motivation} onChange={handleChange} required rows={4} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" ref={fieldRefs.motivation}></textarea>
+                  {/* {fieldErrors.motivation && <span className="text-xs text-red-600">{fieldErrors.motivation}</span>} */}
                 </div>
                 <div className="mb-6">
                   <label className="block text-sm font-medium mb-2">Anhänge (nur PDF, z.B. Lebenslauf, Zeugnisse)</label>
