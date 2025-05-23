@@ -76,7 +76,7 @@ export default function KarrierePage() {
             <p className="mb-6">
               Sie haben keine passende Stelle gefunden? Wir freuen uns auch über Ihre Initiativbewerbung!
             </p>
-            <Link href="#kontakt" className="btn-primary">
+            <Link href="/karriere/bewerben" className="btn-primary">
               Jetzt bewerben
             </Link>
           </div>

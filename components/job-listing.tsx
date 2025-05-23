@@ -50,7 +50,7 @@ export function JobListing({ job }: JobListingProps) {
       </div>
 
       <div className="flex justify-end">
-        <Link href="#kontakt" className="btn-primary">
+        <Link href={`/karriere/bewerben/${job.id}`} className="btn-primary">
           Jetzt bewerben
         </Link>
       </div>
