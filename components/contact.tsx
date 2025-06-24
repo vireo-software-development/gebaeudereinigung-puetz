@@ -211,7 +211,7 @@ export function Contact() {
                   <Phone className="h-6 w-6 text-primary mr-4 mt-1" />
                   <div>
                     <h4 className="font-medium">Telefon</h4>
-                    <p className="text-muted-foreground">+49 2403 5192438</p>
+                    <p className="text-muted-foreground">+49 2423 9509409</p>
                   </div>
                 </div>
 
