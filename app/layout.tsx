@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { CookieConsent } from "@/components/cookie-consent"
 import { SchemaOrg } from "@/components/schema-org"
+import { GoogleTag } from "@/components/google-tag"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -89,6 +90,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
         <CookieConsent />
+        <GoogleTag />
       </body>
     </html>
   )

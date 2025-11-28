@@ -164,6 +164,59 @@ export default function DatenschutzPage() {
           Wir setzen Analyse-Tools nur mit Ihrer ausdrücklichen Einwilligung ein. Sie können diese Einwilligung jederzeit in unseren 
           Cookie-Einstellungen widerrufen.
         </p>
+
+        <h4>Google Ads Conversion Tracking</h4>
+        <p>
+          Diese Website nutzt Google Ads Conversion Tracking, einen Dienst der Google Ireland Limited, Gordon House, Barrow Street, 
+          Dublin 4, Irland ("Google"). Google Ads Conversion Tracking verwendet Cookies, um zu analysieren, wie Nutzer mit unserer 
+          Website interagieren, wenn sie über eine Google-Anzeige auf unsere Website gelangen.
+        </p>
+        <p>
+          <strong>Rechtsgrundlage:</strong> Die Verarbeitung erfolgt auf Grundlage Ihrer ausdrücklichen Einwilligung gemäß Art. 6 Abs. 1 
+          lit. a DSGVO. Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie in unseren Cookie-Einstellungen die 
+          Marketing-Cookies deaktivieren.
+        </p>
+        <p>
+          <strong>Verarbeitete Daten:</strong> Google Ads Conversion Tracking erfasst folgende Informationen:
+        </p>
+        <ul>
+          <li>Die Anzahl der Nutzer, die auf eine unserer Google-Anzeigen klicken</li>
+          <li>Welche Aktionen Nutzer auf unserer Website durchführen (z.B. Kontaktaufnahme, Formularabgabe)</li>
+          <li>Technische Informationen wie IP-Adresse, Browsertyp, Betriebssystem</li>
+          <li>Informationen über das Endgerät des Nutzers</li>
+        </ul>
+        <p>
+          <strong>Zweck:</strong> Die Daten werden verwendet, um die Wirksamkeit unserer Google-Anzeigen zu messen und zu optimieren. 
+          Dies hilft uns, relevantere Anzeigen zu schalten und unsere Werbeausgaben effizienter einzusetzen.
+        </p>
+        <p>
+          <strong>Speicherdauer:</strong> Die von Google gesammelten Daten werden in der Regel für einen Zeitraum von 90 Tagen gespeichert. 
+          Weitere Informationen zur Datenverarbeitung durch Google finden Sie in der Datenschutzerklärung von Google:{" "}
+          <a 
+            href="https://policies.google.com/privacy" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            https://policies.google.com/privacy
+          </a>
+        </p>
+        <p>
+          <strong>Widerruf der Einwilligung:</strong> Sie können Ihre Einwilligung zur Verwendung von Google Ads Conversion Tracking 
+          jederzeit widerrufen, indem Sie in unseren Cookie-Einstellungen die Marketing-Cookies deaktivieren. Sie finden den Link zu 
+          den Cookie-Einstellungen im Footer unserer Website.
+        </p>
+        <p>
+          <strong>Weitere Informationen:</strong> Weitere Informationen zu Google Ads Conversion Tracking finden Sie unter:{" "}
+          <a 
+            href="https://support.google.com/google-ads/answer/1722022" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            https://support.google.com/google-ads/answer/1722022
+          </a>
+        </p>
         
         <h2>4. Ihre Rechte</h2>
         <p>

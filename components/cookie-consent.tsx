@@ -16,21 +16,166 @@ export function CookieConsent() {
     marketing: false,
   })
 
-  useEffect(() => {
-    // Verzögerung hinzufügen, damit die Komponente nicht sofort erscheint
-    const timer = setTimeout(() => {
-      const hasConsent = localStorage.getItem("cookieConsent")
-      if (!hasConsent) {
-        setShowConsent(true)
-      }
-    }, 1000)
+  // Funktion zum Initialisieren von Google Analytics
+  const initializeAnalytics = (settings: typeof cookiePreferences) => {
+    if (typeof window !== "undefined" && settings.analytics) {
+      // Google Analytics Code hier einfügen
+      // Beispiel:
+      /*
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'G-XXXXXXXX', 'auto');
+      ga('send', 'pageview');
+      */
+    }
+  }
 
-    // Globale Funktion zum Öffnen der Cookie-Einstellungen
-    if (typeof window !== "undefined") {
-      window.openCookieSettings = openCookieSettings
+  const initializeGoogleAds = () => {
+    if (typeof window === "undefined") return
+
+    // Initialisiere dataLayer, falls noch nicht vorhanden
+    ;(window as any).dataLayer = (window as any).dataLayer || []
+    
+    // Definiere gtag-Funktion, falls noch nicht vorhanden
+    if (!(window as any).gtag) {
+      function gtag(...args: any[]) {
+        ;(window as any).dataLayer.push(args)
+      }
+      ;(window as any).gtag = gtag
     }
 
-    return () => clearTimeout(timer)
+    // Lade Google Tag Script, falls noch nicht geladen
+    if (!document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=AW-11250362448"]`)) {
+      const script = document.createElement("script")
+      script.async = true
+      script.src = "https://www.googletagmanager.com/gtag/js?id=AW-11250362448"
+      document.head.appendChild(script)
+      
+      script.onload = () => {
+        // Initialisiere Google Ads nach Script-Laden
+        if ((window as any).gtag) {
+          ;(window as any).gtag("js", new Date())
+          ;(window as any).gtag("config", "AW-11250362448")
+        }
+      }
+    } else {
+      // Script bereits geladen, nur konfigurieren
+      if ((window as any).gtag) {
+        ;(window as any).gtag("js", new Date())
+        ;(window as any).gtag("config", "AW-11250362448")
+      }
+    }
+  }
+
+  const deactivateGoogleAds = () => {
+    if (typeof window === "undefined") return
+
+    // Lösche Google Ads Cookies
+    document.cookie = "_gcl_au=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    document.cookie = "_gcl_dc=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    document.cookie = "_gcl_gb=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    
+    // Lösche weitere Marketing-Cookies
+    document.cookie = "_fbp=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    
+    // Entferne Google Tag Script, falls vorhanden
+    const script = document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=AW-11250362448"]`)
+    if (script) {
+      script.remove()
+    }
+
+    // Setze gtag auf noop, um weitere Tracking-Aufrufe zu verhindern
+    if ((window as any).gtag) {
+      ;(window as any).gtag = function() {
+        // No-op: verhindert Tracking-Aufrufe
+      }
+    }
+  }
+
+  const applyConsentSettings = (settings: typeof cookiePreferences) => {
+    // Google Analytics deaktivieren, wenn nicht zugestimmt
+    if (!settings.analytics) {
+      // Deaktiviere Google Analytics
+      if (typeof window !== "undefined") {
+        (window as any)["ga-disable-G-XXXXXXXX"] = true
+      }
+      
+      // Lösche vorhandene Analytics-Cookies
+      document.cookie = "_ga=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+      document.cookie = "_ga_XXXXXXXX=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+      document.cookie = "_gid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+      document.cookie = "_gat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    } else {
+      // Aktiviere Google Analytics, wenn zugestimmt
+      if (typeof window !== "undefined") {
+        (window as any)["ga-disable-G-XXXXXXXX"] = false;
+        
+        // Google Analytics initialisieren, falls noch nicht geschehen
+        if (!(window as any).ga) {
+          initializeAnalytics(settings);
+        }
+      }
+    }
+
+    // Google Ads Conversion Tracking (Marketing-Cookies) steuern
+    if (settings.marketing) {
+      // Aktiviere Google Ads Conversion Tracking
+      initializeGoogleAds()
+    } else {
+      // Deaktiviere Google Ads Conversion Tracking
+      deactivateGoogleAds()
+    }
+
+    // Event dispatchen, damit andere Komponenten reagieren können
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("cookieConsentChanged"))
+    }
+  }
+
+  const openCookieSettings = () => {
+    // Lade gespeicherte Einstellungen, falls vorhanden
+    const savedPreferences = localStorage.getItem("cookiePreferences")
+    if (savedPreferences) {
+      try {
+        setCookiePreferences(JSON.parse(savedPreferences))
+      } catch (e) {
+        console.error("Fehler beim Parsen der Cookie-Präferenzen:", e)
+      }
+    }
+    setShowConsent(true)
+  }
+
+  useEffect(() => {
+    // Lade gespeicherte Cookie-Präferenzen beim ersten Laden
+    if (typeof window !== "undefined") {
+      const savedPreferences = localStorage.getItem("cookiePreferences")
+      if (savedPreferences) {
+        try {
+          const preferences = JSON.parse(savedPreferences)
+          setCookiePreferences(preferences)
+          // Wende die gespeicherten Einstellungen sofort an
+          applyConsentSettings(preferences)
+        } catch (e) {
+          console.error("Fehler beim Parsen der Cookie-Präferenzen:", e)
+        }
+      }
+
+      // Verzögerung hinzufügen, damit die Komponente nicht sofort erscheint
+      const timer = setTimeout(() => {
+        const hasConsent = localStorage.getItem("cookieConsent")
+        if (!hasConsent) {
+          setShowConsent(true)
+        }
+      }, 1000)
+
+      // Globale Funktion zum Öffnen der Cookie-Einstellungen
+      window.openCookieSettings = openCookieSettings
+
+      return () => clearTimeout(timer)
+    }
   }, [])
 
   const savePreferences = () => {
@@ -68,55 +213,6 @@ export function CookieConsent() {
     applyConsentSettings(essentialOnly)
   }
 
-  const applyConsentSettings = (settings: typeof cookiePreferences) => {
-    // Google Analytics deaktivieren, wenn nicht zugestimmt
-    if (!settings.analytics) {
-      // Deaktiviere Google Analytics
-      if (typeof window !== "undefined") {
-        (window as any)["ga-disable-G-XXXXXXXX"] = true
-      }
-      
-      // Lösche vorhandene Analytics-Cookies
-      document.cookie = "_ga=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-      document.cookie = "_ga_XXXXXXXX=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-      document.cookie = "_gid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-      document.cookie = "_gat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-    } else {
-      // Aktiviere Google Analytics, wenn zugestimmt
-      if (typeof window !== "undefined") {
-        (window as any)["ga-disable-G-XXXXXXXX"] = false;
-        
-        // Google Analytics initialisieren, falls noch nicht geschehen
-        if (!(window as any).ga) {
-          initializeAnalytics();
-        }
-      }
-    }
-
-    // Marketing-Cookies deaktivieren, wenn nicht zugestimmt
-    if (!settings.marketing) {
-      // Lösche Marketing-Cookies
-      document.cookie = "_fbp=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-      // Weitere Marketing-Cookies hier hinzufügen
-    }
-  }
-
-  // Funktion zum Initialisieren von Google Analytics
-  const initializeAnalytics = () => {
-    if (typeof window !== "undefined" && cookiePreferences.analytics) {
-      // Google Analytics Code hier einfügen
-      // Beispiel:
-      /*
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      
-      ga('create', 'G-XXXXXXXX', 'auto');
-      ga('send', 'pageview');
-      */
-    }
-  }
 
   const handleCookieToggle = (category: keyof typeof cookiePreferences) => {
     if (category === "essential") return // Essential kann nicht deaktiviert werden
@@ -125,15 +221,6 @@ export function CookieConsent() {
       ...prev,
       [category]: !prev[category],
     }))
-  }
-
-  const openCookieSettings = () => {
-    // Lade gespeicherte Einstellungen, falls vorhanden
-    const savedPreferences = localStorage.getItem("cookiePreferences")
-    if (savedPreferences) {
-      setCookiePreferences(JSON.parse(savedPreferences))
-    }
-    setShowConsent(true)
   }
 
   if (!showConsent) return null
@@ -246,5 +333,6 @@ declare global {
   interface Window {
     openCookieSettings?: () => void;
     dataLayer?: any[];
+    gtag?: (...args: any[]) => void;
   }
 } 
