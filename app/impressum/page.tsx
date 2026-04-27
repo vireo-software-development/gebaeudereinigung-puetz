@@ -15,7 +15,7 @@ export default function ImpressumPage() {
         <h2>Angaben gemäß § 5 TMG</h2>
         <p>
           Gebäudereinigung Pütz UG (haftungsbeschränkt)<br />
-          Obstwiese 38<br />
+          Brockengasse 4<br />
           52459 Inden<br />
           Deutschland
         </p>
@@ -27,8 +27,8 @@ export default function ImpressumPage() {
         
         <h3>Kontakt</h3>
         <p>
-          Telefon: +49 2423 9509409<br />
-          Fax: +49 2423 9509407<br />
+          Telefon: +49 2465 9983685<br />
+          Fax: +49 2465 9983677<br />
           E-Mail: info@gebaeudereinigung-puetz.de
         </p>
         
