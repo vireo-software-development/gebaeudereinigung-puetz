@@ -1,7 +1,0 @@
-# Next.js auf Netlify — nutzt die offizielle Next.js Runtime
-[build]
-  command = "npm run build"
-  publish = ".next"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
