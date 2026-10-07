@@ -73,12 +73,12 @@ export default function DatenschutzPage() {
         </p>
         <p>
           Gebäudereinigung Pütz UG<br />
-          Brockengasse 4<br />
+          Obstwiese 38<br />
           52459 Inden<br />
           Deutschland
         </p>
         <p>
-          Telefon: +49 2465 9983685<br />
+          Telefon: +49 2423 9509409<br />
           Fax: +49 2465 9983677<br />
           E-Mail: info@gebaeudereinigung-puetz.de
         </p>

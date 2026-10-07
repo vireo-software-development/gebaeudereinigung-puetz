@@ -211,7 +211,7 @@ export function Contact() {
                   <Phone className="h-6 w-6 text-primary mr-4 mt-1" />
                   <div>
                     <h4 className="font-medium">Telefon</h4>
-                    <p className="text-muted-foreground">+49 2465 9983685</p>
+                    <p className="text-muted-foreground">+49 2423 9509409</p>
                   </div>
                 </div>
 
@@ -228,7 +228,7 @@ export function Contact() {
                   <div>
                     <h4 className="font-medium">Adresse</h4>
                     <p className="text-muted-foreground">
-                      Brockengasse 4
+                      Obstwiese 38
                       <br />
                       52459 Inden
                       <br />
